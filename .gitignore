@@ -1,0 +1,8 @@
+.idea
+venv
+restaurant/db.sqlite3
+restaurant/test_db
+restaurant.conf
+
+*.pyc
+*.log
