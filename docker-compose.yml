@@ -12,7 +12,7 @@ services:
       - tests
   tests:
     build: .
-    command: python restaurant/manage.py tests
+    command: python restaurant/manage.py test
     volumes:
       - .:/opt/restaurant/src
     depends_on:
