@@ -4,9 +4,9 @@ from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-CONFIG_PATH = os.getenv('CONFIG_PATH') or BASE_DIR.parent.joinpath('restaurant.conf')
+CONFIG_PATH = os.getenv('CONFIG_PATH') or BASE_DIR.parent.joinpath(
+    'restaurant.conf')
 if not CONFIG_PATH:
     raise ImproperlyConfigured('CONFIG_PATH environment variable must be set')
 conf = configparser.ConfigParser()

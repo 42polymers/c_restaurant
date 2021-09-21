@@ -1,8 +1,6 @@
-from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from rest_framework.test import APIRequestFactory
 
 from .models import Restaurant
 
@@ -10,8 +8,10 @@ from .models import Restaurant
 class RestaurantAPITest(APITestCase):
     """Tests for the restaurant api"""
 
-    RESTAURANTS_TO_CREATE = 10
-    TEST_NAME = 'test_name'
+    # how many restaurants will be created
+    RESTAURANTS_TO_CREATE: int = 10
+    # how many retries will be made before random tests failures
+    RETRIES: int = 20
 
     def setUp(self):
         restaurants = []
@@ -125,6 +125,18 @@ class RestaurantAPITest(APITestCase):
         url = reverse('restaurants_random')
         response = self.client.get(url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_data = getattr(response, 'data', None)
+        self.assertTrue(response_data)
+        self.assertEqual(len(response_data), 1)
+        old_name = response_data[0].get('name', None)
+        self.assertTrue(old_name)
+        # trying to get an another result in response. The number of retries
+        # depends on the self.RETRIES constant
+        for i in range(self.RETRIES):
+            new_name = self.client.get(url, {}, format='json').data[0]['name']
+            if new_name != old_name:
+                return
+        self.fail(f'test has been failed in {self.RETRIES} retries')
 
 
 
