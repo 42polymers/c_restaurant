@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: python restaurant/manage.py runserver 0.0.0.0:8001
+    volumes:
+      - .:/opt/restaurant/src
+    ports:
+      - "8001:8001"
