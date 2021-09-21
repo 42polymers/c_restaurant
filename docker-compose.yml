@@ -8,3 +8,17 @@ services:
       - .:/opt/restaurant/src
     ports:
       - "8001:8001"
+    depends_on:
+      - tests
+  tests:
+    build: .
+    command: python restaurant/manage.py tests
+    volumes:
+      - .:/opt/restaurant/src
+    depends_on:
+      - migrations
+  migrations:
+    build: .
+    command: python restaurant/manage.py migrate
+    volumes:
+      - .:/opt/restaurant/src

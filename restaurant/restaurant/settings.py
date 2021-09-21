@@ -19,7 +19,7 @@ SECRET_KEY = conf['main']['SECRET_KEY']
 DEBUG = conf['main']['SECRET_KEY']
 
 ALLOWED_HOSTS = []
-APPEND_SLASH = False
+APPEND_SLASH = conf['main']['APPEND_SLASH']
 
 
 # Application definition
